@@ -1,7 +1,7 @@
 const geniusApi = require('../../api/geniusApi/modules')
 
 
-genius_searchArtist = (message) => {
+genius_searchArtist = (message, artistNameArray) => {
 
 
     console.log('artist')

@@ -1,6 +1,5 @@
 const dotenv = require('dotenv').config();
 const Discord = require('discord.js');
-const { help } = require('./commands/help');
 
 
 const commands = require('./commands/modules');
@@ -38,8 +37,13 @@ client.on("message", async (message) => {
             genius_searchSong(message, args)
             break;
 
+        case 'artist':
+            console.log('searching artist')
+            genius_searchArtist(message, args)
+            break;
+
         default:
-            console.log('please check commands')
+            console.log('please check commands: !help')
     }
 })
 
