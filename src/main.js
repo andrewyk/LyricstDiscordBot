@@ -18,7 +18,7 @@ client.on("message", async (message) => {
 
 
     if (message.author.bot) {return}
-    //if (!message.content.startsWith(prefix)) {return}
+    if (!message.content.startsWith(prefix)) {return}
 
     const commandBody = message.content.slice(prefix.length);
     const args = commandBody.split(' ');
@@ -43,7 +43,7 @@ client.on("message", async (message) => {
             break;
 
         default:
-            console.log('please check commands: !help')
+           message.reply('please check commands: !help')
     }
 })
 
