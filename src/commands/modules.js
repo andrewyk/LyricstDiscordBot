@@ -1,10 +1,10 @@
 const help = require("./help")
-const login = require("./login")
-const genius = require("./genius/modules")
+const songs = require("./songs")
+const users = require("./users")
 
 
 module.exports = {
-    help,
-    login,
-    genius
+  help,
+  songs,
+  users
 };

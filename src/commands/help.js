@@ -21,11 +21,11 @@ const instructions =
    "**?code:**\tlink to github";
 */
 
-help = (message) => {message.channel.send(instructions)}
+const help = (message) => {message.channel.send(instructions)}
 
 
 module.exports = {
 
-   help
+  help
 
 }
