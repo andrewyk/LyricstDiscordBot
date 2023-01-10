@@ -1,8 +1,8 @@
 const instructions =
    //basic commands
    "__**GENERAL:**__\n" +
-   "**!song:**\tsearch song names\n" +
-   "**?points | ?p:**\tcheck ur points\n" +
+   "**!login:**\tlogin to account\n" +
+   "**!song {song name}:**\tsearch song names\n" +
    "**?daily | ?d:**\tredeem 100 omopoints hourly\n\n"
 
 /*

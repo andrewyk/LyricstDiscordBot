@@ -4,13 +4,19 @@ const geniusHelperApi= require('./geniusHelperApi')
 /* Use Genius Api to search song information based on song name */
 const getGeniusSong = async (songNameArray) => {
 
-  
   const songName = songNameArray.join(' ')
 
   const searchUrl = 'https://api.genius.com/search'
   const client_access_token = geniusHelperApi.getAccessToken()
-  let songData = await axios.get(searchUrl, {params:{q:songName, access_token: client_access_token}})
-  return extractSongTitles(songData.data.response.hits)
+  try{
+    let songData = await axios.get(searchUrl, {params:{q:songName, access_token: client_access_token}})
+    return extractSongTitles(songData.data.response.hits)
+  }
+  
+  catch{
+    return ['error']
+  }
+ 
 }
 
 /* Extracts song title from response data */
@@ -26,7 +32,6 @@ const extractSongTitles = (songDataArray) => {
     }
 
   })
-
   return songTitlesList
 }
 

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const dotenv = require('dotenv').config();
 const Discord = require('discord.js');
 
@@ -27,13 +28,13 @@ client.on("message", async (message) => {
   switch(command) {
 
     case 'help':
-
-      commands.help(message)
+      commands.help.help(message)
       break;
     
     case 'login':
       console.log('User Login')
       commands.users.dynamo_loginUsers(message.author.id, message.author.username)
+      commands.users.dynamo_getUsers()
       break;
 
     case 'song':
@@ -45,6 +46,7 @@ client.on("message", async (message) => {
 
     default:
       message.reply('please check commands: !help')
+
   }
 })
 

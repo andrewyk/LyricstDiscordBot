@@ -12,7 +12,6 @@ const genius_searchSong = async (message, songNameArray) => {
   catch(error) {
     console.log(error)
     message.reply('Error searching for song')
-
   }
 
 }

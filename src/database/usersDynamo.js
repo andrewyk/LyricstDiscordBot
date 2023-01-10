@@ -12,7 +12,7 @@ AWS.config.update({
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = "USERS";
 
-const getCharacters = async ()=> {
+const getUsers = async ()=> {
 
   const params = {
 
@@ -40,6 +40,6 @@ const addorUpdateUsers = async(character) => {
 
 
 module.exports = {
-  getCharacters,
+  getUsers,
   addorUpdateUsers
 }
