@@ -6,40 +6,85 @@ AWS.config.update({
   accessKeyID: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 
-})
+});
 
 
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = "USERS";
+const TABLE_USERS = "USERS";
+const TABLE_USERS_SONG = "USERS_SONGS";
 
-const getUsers = async ()=> {
+const getUser = async (userID)=> {
 
   const params = {
 
-    TableName: TABLE_NAME
+    TableName: TABLE_USERS,
+    Key:{
+      UserID: userID
+    }
 
   };
 
-  const characters = await dynamoClient.scan(params).promise();
-  console.log(characters)
-  return characters
+  let userData = await dynamoClient.get(params).promise();
+  return userData.Item;
 
-}
+};
 
-const addorUpdateUsers = async(character) => {
-
+const addorUpdateUser = async(userInfo) => {
+//add Users information if not exist
   const params = {
-    TableName: TABLE_NAME,
-    Item: character
+    TableName: TABLE_USERS,
+    Item: userInfo
 
+  };
+
+  const userParams = {
+    Key:{
+      'UserID' : '123'
+    },
+    TableName : TABLE_USERS
+  };
+
+  let userData = await dynamoClient.get(userParams).promise();
+  
+  if (Object.keys(userData).length == 0) {
+    // add USERS_SONGS record
+    await addUserSong(userInfo.UserID, []);
+    
   }
 
-  return await dynamoClient.put(params).promise()
+  return await dynamoClient.put(params).promise();
 
-}
+};
+
+const addUserSong = async(userID, songList) => {
+
+  const params = {
+    TableName: TABLE_USERS_SONG,
+    Item: {
+      UserID: userID,
+      SongList: songList
+    }
+  };
+  return await dynamoClient.put(params).promise();
+};
+
+const getUserSongList = async(userID) => {
+
+  const params = {
+    TableName: TABLE_USERS_SONG,
+    Key: {
+      UserID:userID
+    }
+  };
+
+  let userSongsData = await dynamoClient.get(params).promise();
+  return userSongsData.Item.SongList;
+};
 
 
 module.exports = {
-  getUsers,
-  addorUpdateUsers
-}
+  getUser,
+  addorUpdateUser,
+  addUserSong,
+  getUserSongList
+};

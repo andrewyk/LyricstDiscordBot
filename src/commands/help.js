@@ -3,7 +3,7 @@ const instructions =
    "__**GENERAL:**__\n" +
    "**!login:**\tlogin to account\n" +
    "**!song {song name}:**\tsearch song names\n" +
-   "**?daily | ?d:**\tredeem 100 omopoints hourly\n\n"
+   "**?daily | ?d:**\tredeem 100 omopoints hourly\n\n";
 
 /*
    //games commands
@@ -21,11 +21,11 @@ const instructions =
    "**?code:**\tlink to github";
 */
 
-const help = (message) => {message.channel.send(instructions)}
+const help = (message) => {message.channel.send(instructions);};
 
 
 module.exports = {
 
   help
 
-}
+};

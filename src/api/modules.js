@@ -1,7 +1,7 @@
-const geniusSongApi= require('./geniusSongApi')
+const geniusSongApi= require('./geniusSongApi');
 
 module.exports = {
 
   geniusSongApi
 
-}
+};

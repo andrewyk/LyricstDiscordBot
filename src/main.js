@@ -11,15 +11,15 @@ const prefix = '!';
 
 client.once('ready', () => {
 
-  console.log('Online')
+  console.log('Online');
 
-})
+});
 
 client.on("message", async (message) => {
 
 
-  if (message.author.bot) {return}
-  if (!message.content.startsWith(prefix)) {return}
+  if (message.author.bot) {return;}
+  if (!message.content.startsWith(prefix)) {return;}
 
   const commandBody = message.content.slice(prefix.length);
   const args = commandBody.split(' ');
@@ -28,26 +28,27 @@ client.on("message", async (message) => {
   switch(command) {
 
     case 'help':
-      commands.help.help(message)
+      commands.help.help(message);
       break;
     
-    case 'login':
-      console.log('User Login')
-      commands.users.dynamo_loginUsers(message.author.id, message.author.username)
-      commands.users.dynamo_getUsers()
+    case 'register':
+      console.log('User register');
+      commands.users.registerUsers(message);
       break;
 
     case 'song':
-
-      console.log('searching song')
-      commands.songs.genius_searchSong(message, args)
+      console.log('searching song');
+      commands.songs.sendSongInfo(message, args);
       break;
-
-
+    
+    case 'addsong':
+      console.log('add song');
+      commands.addsong.addSong(message,args);
+      break;
     default:
-      message.reply('please check commands: !help')
+      message.reply('please check commands: !help');
 
   }
-})
+});
 
-client.login(process.env.DISCORD_TOKEN)
+client.login(process.env.DISCORD_TOKEN);

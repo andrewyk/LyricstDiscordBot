@@ -1,47 +1,44 @@
-const api = require('../api/modules')
+const helper = require('../helpers/modules');
 
-
-const genius_searchSong = async (message, songNameArray) => {
+const sendSongInfo = async(message, songNameArray) => {
 
   try{
-    let songTitlesArray  = await api.geniusSongApi.getGeniusSong(songNameArray)
-    let songTitles = parseSongTitles(songTitlesArray)
-    message.reply(songTitles)
 
-  }
-  catch(error) {
-    console.log(error)
-    message.reply('Error searching for song')
-  }
+    helper.validate.validateSongName(songNameArray);
 
-}
+    let songList = await helper.genius.geniusSearchSong(songNameArray);
+  
+    message.reply(parseSongTitles(songList));
+  
+  } 
+  catch(error){
+    if (error.msg){
+      message.reply(error.msg);
+    } else {
+      message.reply('Error has occured when searching song. Please try again.');
+    }
+  }
+};
+
 
 /* Creates a string of song titles */
 const parseSongTitles = (songTitlesArray) =>{
 
-  let songTitles = ''
+  let songTitles = '';
 
-  if (songTitlesArray.length == 0){
+  songTitlesArray.forEach((title, index) => {
 
-    songTitles += '\n Song name does not exist.'
+    songTitles +=  '\n' + (index+1) + '.) ' + title ;
 
-  } else {
+  });
 
-    songTitlesArray.forEach((title, index) => {
-	
-			songTitles +=  '\n' + (index+1) + '.) ' + title 
-  
-    })
+  return songTitles;
 
-  }
-
-  return songTitles
-
-}
+};
 
 
 module.exports = {
+  sendSongInfo,
+  parseSongTitles
 
-	genius_searchSong
-
-}
+};

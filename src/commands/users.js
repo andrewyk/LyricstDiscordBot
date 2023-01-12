@@ -1,22 +1,21 @@
-const usersDynamo = require('../database/usersDynamo');
+const usersDynamo = require('../database/usersdynamo');
 
-const dynamo_loginUsers = async (userID, userName) => {
+const registerUsers = async (message) => {
 
-  const params = {'UserID':userID, "UserName":userName};
+  try{
 
-  await usersDynamo.addorUpdateUsers(params)
+    const params = {'UserID':message.author.id, "UserName":message.author.username};
 
-}
+    await usersDynamo.addorUpdateUser(params);
+    message.reply("Registration complete.");
+  } catch(error){
+    message.reply("Error has occured when registering. Please try again.");
+  }
 
-const dynamo_getUsers = async () => {
-
-  return await usersDynamo.getUsers()
-
-}
+};
 
 module.exports = {
 
-  dynamo_loginUsers,
-  dynamo_getUsers
+  registerUsers
     
-}
+};
