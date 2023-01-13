@@ -45,6 +45,11 @@ client.on("message", async (message) => {
       console.log('add song');
       commands.addsong.addSong(message,args);
       break;
+    
+    case 'songlist':
+      console.log('show song list');
+      commands.songlist.showSongList(message);
+      break;
     default:
       message.reply('please check commands: !help');
 

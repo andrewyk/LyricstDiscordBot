@@ -1,5 +1,4 @@
 const helper = require('../helpers/modules');
-const songs = require('./songs');
 const usersDynamo = require('../database/usersdynamo');
 
 
@@ -24,7 +23,7 @@ const addSong = async (message, songNameArray) => {
     if (error.msg){
       message.reply(error.msg);
     } else {
-      message.reply('Error has occured when adding song. Please try again.');
+      message.reply(helper.message.errorMsg);
     }
     
     
@@ -36,7 +35,7 @@ const addSong = async (message, songNameArray) => {
 const getSongsListReply = (songList) => {
 
   let reply = `\n Please type a number from 1-${songList.length} to choose from the list below:`;
-  reply += songs.parseSongTitles(songList);
+  reply += helper.genius.parseSongTitles(songList);
   return reply;
 
 };

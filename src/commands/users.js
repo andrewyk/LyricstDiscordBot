@@ -1,3 +1,4 @@
+const helper = require('../helpers/modules');
 const usersDynamo = require('../database/usersdynamo');
 
 const registerUsers = async (message) => {
@@ -5,11 +6,10 @@ const registerUsers = async (message) => {
   try{
 
     const params = {'UserID':message.author.id, "UserName":message.author.username};
-
     await usersDynamo.addorUpdateUser(params);
-    message.reply("Registration complete.");
+    message.reply(helper.message.registerMsg);
   } catch(error){
-    message.reply("Error has occured when registering. Please try again.");
+    message.reply(helper.message.errorMsg);
   }
 
 };

@@ -23,6 +23,22 @@ const geniusSearchSong = async (songNameArray) => {
 
 };
 
+/* Creates a string of song titles */
+const parseSongTitles = (songTitlesArray) =>{
+
+  let songTitles = '';
+
+  songTitlesArray.forEach((title, index) => {
+
+    songTitles +=  '\n' + (index+1) + '.) ' + title ;
+
+  });
+
+  return songTitles;
+
+};
+
 module.exports = {
-  geniusSearchSong
+  geniusSearchSong,
+  parseSongTitles
 };

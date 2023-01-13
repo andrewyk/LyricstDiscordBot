@@ -8,37 +8,20 @@ const sendSongInfo = async(message, songNameArray) => {
 
     let songList = await helper.genius.geniusSearchSong(songNameArray);
   
-    message.reply(parseSongTitles(songList));
+    message.reply(helper.genius.parseSongTitles(songList));
   
   } 
   catch(error){
     if (error.msg){
       message.reply(error.msg);
     } else {
-      message.reply('Error has occured when searching song. Please try again.');
+      message.reply(helper.message.errorMsg);
     }
   }
 };
 
 
-/* Creates a string of song titles */
-const parseSongTitles = (songTitlesArray) =>{
-
-  let songTitles = '';
-
-  songTitlesArray.forEach((title, index) => {
-
-    songTitles +=  '\n' + (index+1) + '.) ' + title ;
-
-  });
-
-  return songTitles;
-
-};
-
-
 module.exports = {
-  sendSongInfo,
-  parseSongTitles
+  sendSongInfo
 
 };
