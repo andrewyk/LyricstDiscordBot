@@ -13,10 +13,10 @@ const addSong = async (message, songNameArray) => {
     var userSongList = await usersDynamo.getUserSongList(message.author.id);
     helper.validate.validateAddSongListSize(userSongList);
 
-    var songsReply = getSongsListReply(songList);
+    var songsReply = addSongsListReply(songList);
 
     await message.reply(songsReply);
-    await getUserReply(message,songList);
+    await addUserSong(message,songList);
 
   }catch(error){
 
@@ -32,7 +32,7 @@ const addSong = async (message, songNameArray) => {
 
 };
 
-const getSongsListReply = (songList) => {
+const addSongsListReply = (songList) => {
 
   let reply = `\n Please type a number from 1-${songList.length} to choose from the list below:`;
   reply += helper.genius.parseSongTitles(songList);
@@ -41,7 +41,7 @@ const getSongsListReply = (songList) => {
 };
 
 
-const getUserReply = async (message, songList) => {
+const addUserSong = async (message, songList) => {
 //Use discord Message Collector to get user input
   const filter = m => m.author.id === message.author.id;
 
@@ -63,7 +63,7 @@ const getUserReply = async (message, songList) => {
 
     let userID = m.author.id;
     let songChosen = songList[songIndex-1];
-    let userSongList = await usersDynamo.getUserSongList(message.author.id);
+    let userSongList = await usersDynamo.getUserSongList(userID);
     await addToSongList(userID, songChosen, userSongList);
     message.reply(`${songChosen} has been added.`);
 
@@ -75,7 +75,7 @@ const getUserReply = async (message, songList) => {
 const addToSongList = async(userID, song, songList) => {
 
   songList.push(song);
-  await usersDynamo.addUserSong(userID,songList);
+  await usersDynamo.updateUserSong(userID,songList);
 
 };
 

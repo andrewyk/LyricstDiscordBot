@@ -23,6 +23,12 @@ const validateAddSongListSize = (userSongList) => {
   }
 };
 
+const validateRemoveSongListSize = (userSongList) => {
+  if (userSongList.length == 0) {
+    throw {msg:'Songs list is empty, please use "!addsong" command to add songs'};
+  }
+};
+
 
 
 
@@ -31,6 +37,7 @@ module.exports = {
 
   validateUser,
   validateSongName,
-  validateAddSongListSize
+  validateAddSongListSize,
+  validateRemoveSongListSize
 
 };

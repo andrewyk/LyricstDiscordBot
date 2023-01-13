@@ -48,7 +48,7 @@ const addorUpdateUser = async(userInfo) => {
   
   if (Object.keys(userData).length == 0) {
     // add USERS_SONGS record
-    await addUserSong(userInfo.UserID, []);
+    await updateUserSong(userInfo.UserID, []);
     
   }
 
@@ -56,7 +56,7 @@ const addorUpdateUser = async(userInfo) => {
 
 };
 
-const addUserSong = async(userID, songList) => {
+const updateUserSong = async(userID, songList) => {
 
   const params = {
     TableName: TABLE_USERS_SONG,
@@ -85,6 +85,6 @@ const getUserSongList = async(userID) => {
 module.exports = {
   getUser,
   addorUpdateUser,
-  addUserSong,
+  updateUserSong,
   getUserSongList
 };

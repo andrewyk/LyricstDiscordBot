@@ -68,7 +68,7 @@ test('dynamo user songs register', async() => {
 
 test('dynamo add users song', async() => {
 
-  await usersDynamo.addUserSong(UserID,SongList);
+  await usersDynamo.updateUserSong(UserID,SongList);
   let userSongList = await usersDynamo.getUserSongList(UserID);
   expect(userSongList).toEqual(SongList);
 
