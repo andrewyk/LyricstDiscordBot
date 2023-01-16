@@ -1,23 +1,28 @@
 const helper = require('../helpers/modules');
 const usersDynamo = require('../database/usersdynamo');
+const songDynamo = require('../database/songdynamo');
 
 
 const addSong = async (message, songNameArray) => {
-
+//add song into users songlist
   try{
-
-    await helper.validate.validateUser(message.author.id);
+    let userID = message.author.id;
+    await helper.validate.validateUser(userID);
     helper.validate.validateSongName(songNameArray);
 
-    var songList = await helper.genius.geniusSearchSong(songNameArray);
-    var userSongList = await usersDynamo.getUserSongList(message.author.id);
+    //add song to users songlist
+    let songHash = await helper.genius.geniusSearchSong(songNameArray);
+    let songList = Object.keys(songHash);
+    var userSongList = await usersDynamo.getUserSongList(userID);
     helper.validate.validateAddSongListSize(userSongList);
 
     var songsReply = addSongsListReply(songList);
 
     await message.reply(songsReply);
-    await addUserSong(message,songList);
-
+    
+    //get user input to store songlist
+    await addUserSong(message, songList, songHash);
+  
   }catch(error){
 
     if (error.msg){
@@ -25,8 +30,6 @@ const addSong = async (message, songNameArray) => {
     } else {
       message.reply(helper.message.errorMsg);
     }
-    
-    
     
   }
 
@@ -41,8 +44,8 @@ const addSongsListReply = (songList) => {
 };
 
 
-const addUserSong = async (message, songList) => {
-//Use discord Message Collector to get user input
+const addUserSong = async (message, songList, songHash) => {
+//Use discord Message Collector to get user input and store songlist and song
   const filter = m => m.author.id === message.author.id;
 
   const collector = message.channel.createMessageCollector(filter, {
@@ -60,14 +63,32 @@ const addUserSong = async (message, songList) => {
       return;
 
     }
+    //store in users song list
+    try{
+      let userID = m.author.id;
+      let index = songIndex-1;
+      let songChosen = songList[index];
+      let userSongList = await usersDynamo.getUserSongList(userID);
+      helper.validate.validateDuplicateSongList(userSongList, songChosen);
+      await addToSongList(userID, songChosen, userSongList);
+      message.reply(`${songChosen} has been added.`);
 
-    let userID = m.author.id;
-    let songChosen = songList[songIndex-1];
-    let userSongList = await usersDynamo.getUserSongList(userID);
-    await addToSongList(userID, songChosen, userSongList);
-    message.reply(`${songChosen} has been added.`);
-
-
+      //store song info in songs table
+      let songTitle = songList[index];
+      let songID = songHash[songTitle];
+      await songDynamo.addorUpdateSong({
+        SongTitle:songTitle, 
+        SongID:songID, 
+        SearchName:songTitle.toLowerCase()
+      });
+    }
+    catch(error){
+      if (error.msg){
+        message.reply(error.msg);
+      } else {
+        message.reply(helper.message.errorMsg);
+      }
+    }
   });
 
 };

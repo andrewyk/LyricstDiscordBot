@@ -4,6 +4,7 @@ const users = require("./users");
 const addsong = require("./addsong");
 const songlist = require("./songlist");
 const removesong = require("./removesong");
+const songinfo = require("./songinfo");
 
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
   users,
   addsong,
   songlist,
-  removesong
+  removesong,
+  songinfo
 };

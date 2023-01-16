@@ -47,7 +47,7 @@ const removeUserSong = async (message, songList) => {
   
       if (isNaN(songIndex) || (songIndex < 1 || songIndex > songList.length)){
   
-        message.reply('Incorrect response, try !addsong again.');
+        message.reply('Incorrect response, try !removesong again.');
         return;
   
       }

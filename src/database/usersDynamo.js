@@ -38,14 +38,12 @@ const addorUpdateUser = async(userInfo) => {
   };
 
   const userParams = {
-    Key:{
-      'UserID' : '123'
-    },
+    Key: {UserID:userInfo.UserID},
     TableName : TABLE_USERS
   };
 
   let userData = await dynamoClient.get(userParams).promise();
-  
+ 
   if (Object.keys(userData).length == 0) {
     // add USERS_SONGS record
     await updateUserSong(userInfo.UserID, []);

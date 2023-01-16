@@ -4,13 +4,13 @@ const geniusSearchSong = async (songNameArray) => {
   //search songs and returns list of songs.
 
   try{
-    let songTitlesArray  = await api.geniusSongApi.getGeniusSong(songNameArray);
+    let songTitlesHash  = await api.geniusSongApi.getGeniusSong(songNameArray);
     
-    if (songTitlesArray.length == 0){
+    if (Object.keys(songTitlesHash).length == 0){
       throw {msg:'Song does not exist'};
     }
 
-    return songTitlesArray;
+    return songTitlesHash;
   }
   
   catch(error) {
@@ -38,7 +38,23 @@ const parseSongTitles = (songTitlesArray) =>{
 
 };
 
+const geniusSongInfo = async(songID) => {
+
+  let songData = await api.geniusSongApi.getGeniusSongInfo(songID);
+  return extractSongInfo(songData);
+};
+
+const extractSongInfo = (songData) => {
+  let songInfoReply = `\n Song:    ${songData.title}`;
+  songInfoReply += `\n Album:  ${songData.album.name}`;
+  songInfoReply += `\n Artist:  ${songData.artist_names}`;
+  songInfoReply += `\n Lyrics:  ${songData.description_annotation.annotatable.url}`;
+  return songInfoReply;
+
+};
+
 module.exports = {
   geniusSearchSong,
-  parseSongTitles
+  parseSongTitles,
+  geniusSongInfo
 };

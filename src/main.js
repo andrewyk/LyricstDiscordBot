@@ -55,7 +55,12 @@ client.on("message", async (message) => {
       console.log('remove song');
       commands.removesong.removeSong(message);
       break;
-      
+
+    case 'songinfo':
+      console.log('song info');
+      commands.songinfo.songInfo(message, args);
+      break;
+
     default:
       message.reply('please check commands: !help');
 
