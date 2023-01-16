@@ -6,7 +6,8 @@ const sendSongInfo = async(message, songNameArray) => {
 
     helper.validate.validateSongName(songNameArray);
 
-    let songList = await helper.genius.geniusSearchSong(songNameArray);
+    let songTitleHash = await helper.genius.geniusSearchSong(songNameArray);
+    let songList = Object.keys(songTitleHash);
   
     message.reply(helper.genius.parseSongTitles(songList));
   

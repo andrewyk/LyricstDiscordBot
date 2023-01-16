@@ -3,6 +3,10 @@ const instructions =
    "__**GENERAL:**__\n" +
    "**!login:**\tlogin to account\n" +
    "**!song {song name}:**\tsearch song names\n" +
+   "**!addsong {song name}:**\tadd song to song list\n" +
+   "**!songlist:**\tview song list\n" +
+   "**!removesong:**\tremove song from song list\n" +
+   "**!songinfo {song name}:**\tview song info\n" +
    "**?daily | ?d:**\tredeem 100 omopoints hourly\n\n";
 
 /*
